@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rooneys | Our Culinary Delights - Woodinville's Premier Irish Gastropub</title>
+  <meta name="description" content="Explore the full menu at Rooneys, featuring authentic Irish-inspired dishes, hearty gastropub classics, and a curated selection of craft beers, whiskeys, and cocktails.">
+  <meta name="keywords" content="Rooneys menu, Irish food Woodinville, gastropub menu, best beer Woodinville, whiskey list, brunch menu, dinner menu, cocktails, Woodinville restaurant, local ingredients">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"> <style>
+    /* Base & Typography */
+    body { 
+      font-family: 'Inter', sans-serif; 
+      scroll-behavior: smooth;
+      overflow-x: hidden; /* Prevents horizontal scroll from animations */
+      background-color: #000; /* Ensure black background */
+    }
+    h1, h2, h3, h4, h5, h6 { 
+      font-family: 'Playfair Display', serif; 
+    }
+
+    /* Navbar & Header */
+    header {
+      transition: background-color 0.3s ease; /* Smooth background change on scroll */
+    }
+    .scrolled-nav {
+      background-color: rgba(0, 0, 0, 0.95); /* Slightly darker when scrolled */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+    .nav-link:hover {
+      transform: translateY(-2px); /* Slight lift on hover */
+    }
+    .nav-link.active {
+      color: #FACC15;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background-color: #FACC15;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother animation */
+      transform: translateX(-50%);
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Primary Button Styles (Reused for consistency) */
+    .btn-primary {
+      background-color: #FACC15;
+      color: #1a202c;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #FDE047;
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(252, 212, 0, 0.6);
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 80%);
+      transform: scale(0);
+      opacity: 0;
+      border-radius: 50%;
+      transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+      z-index: -1;
+    }
+    .btn-primary:hover::before {
+      transform: scale(2.5);
+      opacity: 1;
+    }
+    .btn-primary::after { /* Click ripple effect */
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: scale(0);
+      opacity: 1;
+      animation: ripple 0.6s ease-out;
+    }
+    @keyframes ripple {
+      to {
+        transform: scale(2.5);
+        opacity: 0;
+      }
+    }
+
+    /* Scroll to Top Button (Reused for consistency) */
+    #scrollToTop {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      background-color: #FACC15;
+      color: black;
+      cursor: pointer;
+      padding: 14px 20px;
+      border-radius: 50%;
+      font-size: 22px;
+      box-shadow: 0 6px 15px rgba(252, 212, 0, 0.7);
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      animation: bouncePulse 2s infinite ease-in-out;
+    }
+    #scrollToTop:hover {
+      background-color: #FDE047;
+      transform: translateY(-7px) scale(1.1);
+      box-shadow: 0 8px 20px rgba(252, 212, 0, 0.9);
+      animation: none;
+    }
+    @keyframes bouncePulse {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-3px) scale(1.03); }
+    }
+
+    /* Menu Item Styling */
+    .menu-category {
+      background-color: #0a0a0a; /* Slightly lighter black for distinction */
+      padding: 2.5rem; /* More generous padding */
+      border-radius: 0.75rem; /* Rounded corners */
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+      transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+    }
+    .menu-category:hover {
+      transform: translateY(-5px); /* Lift on hover */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6); /* More prominent shadow on hover */
+    }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline; /* Align text baselines */
+      margin-bottom: 0.75rem; /* Space between items */
+      padding-bottom: 0.5rem; /* Padding for separator */
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.15); /* Subtle dashed separator */
+    }
+    .menu-item:last-child {
+        border-bottom: none; /* No separator for last item */
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .menu-item strong {
+      font-weight: 600; /* Slightly bolder for names */
+      color: #FACC15; /* Highlight item names */
+      font-size: 1.125rem; /* Larger item names */
+    }
+    .menu-item span { /* Description */
+      font-size: 0.95rem;
+      color: #ccc;
+      margin-top: 0.25rem;
+      display: block; /* Ensure description breaks line */
+    }
+    .menu-item-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.125rem;
+      color: #FDE047; /* Price color */
+      font-weight: 700;
+    }
+
+    /* Hero Banner for Menu Page */
+    .menu-hero-background {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('images/menu-hero.jpg'); /* New image */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed; /* Parallax */
+      height: 60vh; /* Shorter than main hero, still impactful */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .menu-hero-background::before { /* Subtle overlay animation */
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
+        animation: pulseOverlay 4s infinite alternate ease-in-out;
+    }
+    @keyframes pulseOverlay {
+        from { opacity: 0.8; }
+        to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+  <header class="bg-black bg-opacity-80 fixed w-full z-50 transition-all duration-300 ease-in-out" id="mainHeader">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+      <h1 class="text-3xl font-bold text-yellow-400 mb-3 md:mb-0 transform hover:scale-105 transition-transform duration-200">Rooneys</h1>
+      <ul class="flex space-x-4 sm:space-x-6 text-base font-semibold">
+        <li><a href="index.html" class="nav-link hover:text-yellow-400">Home</a></li>
+        <li><a href="about.html" class="nav-link hover:text-yellow-400">About</a></li>
+        <li><a href="gallery.html" class="nav-link hover:text-yellow-400">Gallery</a></li>
+        <li><a href="contact.html" class="nav-link hover:text-yellow-400">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="menu-hero-background text-center">
+    <div class="p-8 md:p-12 rounded-xl max-w-2xl mx-auto" data-aos="zoom-in" data-aos-duration="1200" data-aos-once="true">
+      <h2 class="text-5xl md:text-7xl font-bold text-yellow-400 leading-tight tracking-wide mb-4" data-aos="fade-up" data-aos-delay="300" data-aos-once="true">Savor the Flavor</h2>
+      <p class="text-xl md:text-2xl text-gray-200" data-aos="fade-up" data-aos-delay="600" data-aos-once="true">Explore our culinary journey, from hearty classics to inspired new creations.</p>
+    </div>
+  </section>
+
+  <main class="py-20 md:py-32 px-6 md:px-20 max-w-6xl mx-auto">
+    <h2 class="text-4xl md:text-5xl font-bold text-yellow-400 mb-12 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">Our Gastropub Delights</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div class="menu-category" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000" data-aos-once="true">
+        <h3 class="text-3xl font-semibold text-yellow-400 mb-6 border-b-2 border-yellow-500 pb-3">Brunch</h3>
+        <ul class="space-y-4">
+          <li class="menu-item">
+            <div>
+              <strong>Irish Benedict</strong>
+              <span>Corned beef, poached eggs, hollandaise on toasted soda bread.</span>
+            </div>
+            <span class="menu-item-price">$16</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Whiskey French Toast</strong>
+              <span>Thick-cut brioche, Jameson-maple glaze, candied pecans, fresh berries.</span>
+            </div>
+            <span class="menu-item-price">$14</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Avocado Soda Bread</strong>
+              <span>Smashed avocado, chili flakes, feta, poached egg, toasted soda bread.</span>
+            </div>
+            <span class="menu-item-price">$13</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Full Irish Breakfast</strong>
+              <span>Sausage, bacon, black pudding, white pudding, grilled tomato, beans, fried egg, soda bread.</span>
+            </div>
+            <span class="menu-item-price">$18</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="menu-category" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000" data-aos-once="true">
+        <h3 class="text-3xl font-semibold text-yellow-400 mb-6 border-b-2 border-yellow-500 pb-3">Dinner</h3>
+        <ul class="space-y-4">
+          <li class="menu-item">
+            <div>
+              <strong>Guinness Beef Stew</strong>
+              <span>Slow-braised short ribs, root vegetables, rich Guinness gravy, served with soda bread.</span>
+            </div>
+            <span class="menu-item-price">$22</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Crispy Fish & Chips</strong>
+              <span>Ale-battered Pacific cod, hand-cut house fries, roasted garlic tartar sauce.</span>
+            </div>
+            <span class="menu-item-price">$19</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Lamb Burger</strong>
+              <span>Spiced lamb patty, creamy tzatziki, fresh arugula, pickled red onion, brioche bun.</span>
+            </div>
+            <span class="menu-item-price">$17</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Shepherd's Pie</strong>
+              <span>Savory minced lamb and vegetables topped with golden mashed potatoes.</span>
+            </div>
+            <span class="menu-item-price">$20</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="menu-category" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000" data-aos-once="true">
+        <h3 class="text-3xl font-semibold text-yellow-400 mb-6 border-b-2 border-yellow-500 pb-3">Drinks</h3>
+        <ul class="space-y-4">
+          <li class="menu-item">
+            <div>
+              <strong>Rooney's Old Fashioned</strong>
+              <span>Premium bourbon, angostura bitters, raw sugar cube, orange twist.</span>
+            </div>
+            <span class="menu-item-price">$15</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Jameson Espresso Martini</strong>
+              <span>Chilled espresso, Jameson Irish Whiskey, Kahlúa, hint of vanilla.</span>
+            </div>
+            <span class="menu-item-price">$14</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Local Craft Brews</strong>
+              <span>Rotating selection of the finest craft beers from Woodinville and beyond.</span>
+            </div>
+            <span class="menu-item-price">Varies</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Signature Irish Coffee</strong>
+              <span>Hot coffee, Irish whiskey, brown sugar, topped with fresh cream.</span>
+            </div>
+            <span class="menu-item-price">$12</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="menu-category md:col-span-full lg:col-span-1" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000" data-aos-once="true">
+        <h3 class="text-3xl font-semibold text-yellow-400 mb-6 border-b-2 border-yellow-500 pb-3">Appetizers</h3>
+        <ul class="space-y-4">
+          <li class="menu-item">
+            <div>
+              <strong>Dubliner Cheese Dip</strong>
+              <span>Warm cheese and spinach dip with toasted baguette slices.</span>
+            </div>
+            <span class="menu-item-price">$12</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Whiskey Glazed Wings</strong>
+              <span>Crispy chicken wings tossed in a savory whiskey BBQ glaze.</span>
+            </div>
+            <span class="menu-item-price">$15</span>
+          </li>
+          <li class="menu-item">
+            <div>
+              <strong>Smoked Salmon Crostini</strong>
+              <span>Capers, dill cream cheese, on crispy crostini.</span>
+            </div>
+            <span class="menu-item-price">$14</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="text-center mt-16" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+      <p class="text-xl text-gray-300 mb-8">
+        Our menu celebrates the best of Irish culinary traditions with a modern twist, using fresh, local ingredients whenever possible. Ask your server about our daily specials!
+      </p>
+      <a href="contact.html" class="btn-primary px-10 py-5 rounded-full font-bold text-xl inline-block shadow-lg">Make a Reservation</a>
+    </div>
+  </main>
+
+  <footer class="bg-[#0f0f0f] text-center py-10 text-sm text-gray-400 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="mb-3">&copy; 2025 Rooneys Woodinville. All rights reserved.</p>
+      <p>Crafted with passion and a pint of perfection.</p>
+      <div class="flex justify-center space-x-6 mt-6">
+        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors duration-300 transform hover:scale-110" aria-label="Find us on Facebook"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.502 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22H12c5.523 0 10-4.477 10-10z" clip-rule="evenodd" /></svg></a>
+        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors duration-300 transform hover:scale-110" aria-label="Follow us on Instagram"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C8.75 2 7.75 2 6.75 2.05c-1.07.03-1.62.13-2.09.28-.47.15-.88.35-1.27.74-.39.39-.59.8-.74 1.27-.15.47-.25 1.02-.28 2.09C2 7.75 2 8.75 2 12s0 4.25.05 5.25c.03 1.07.13 1.62.28 2.09.15.47.35.88.74 1.27.39.39.8.59 1.27.74.47.15 1.02.25 2.09.28C7.75 22 8.75 22 12 22s4.25 0 5.25-.05c1.07-.03 1.62-.13 2.09-.28.47-.15.88-.35 1.27-.74.39-.39.59-.8.74-1.27.15-.47.25-1.02.28-2.09.05-1.07.05-2.07.05-5.25s0-4.25-.05-5.25c-.03-1.07-.13-1.62-.28-2.09-.15-.47-.35-.88-.74-1.27-.39-.39-.8-.59-1.27-.74-.47-.15-1.02-.25-2.09-.28C16.25 2 15.25 2 12 2zm0 2.2c3.27 0 3.68.01 4.7.05 1.06.04 1.45.16 1.74.25.29.09.52.2.73.41.21.21.32.44.41.73.09.29.21.68.25 1.74.04 1.02.05 1.43.05 4.7s-.01 3.68-.05 4.7c-.04 1.06-.16 1.45-.25 1.74-.09.29-.2.52-.41.73-.21.21-.44.32-.73.41-.29.09-.68.21-1.74.25-1.02.04-1.43.05-4.7.05s-3.68-.01-4.7-.05c-1.06-.04-1.45-.16-1.74-.25-.29-.09-.52-.2-.73-.41-.21-.21-.32-.44-.41-.73-.09-.29-.21-.68-.25-1.74-.04-1.02-.05-1.43-.05-4.7s.01-3.68.05-4.7c.04-1.06.16-1.45.25-1.74.09-.29.2-.52.41-.73.21-.21.44-.32.73-.41.29-.09.68-.21 1.74-.25C8.32 4.21 8.73 4.2 12 4.2zM12 7.5c-2.48 0-4.5 2.02-4.5 4.5s2.02 4.5 4.5 4.5 4.5-2.02 4.5-4.5-2.02-4.5-4.5-4.5zm0 2.2c1.27 0 2.3 1.03 2.3 2.3s-1.03 2.3-2.3 2.3-2.3-1.03-2.3-2.3 1.03-2.3 2.3-2.3zm6.2-4.7c.73 0 1.3-.57 1.3-1.3s-.57-1.3-1.3-1.3-1.3.57-1.3 1.3.57 1.3 1.3 1.3z" clip-rule="evenodd" /></svg></a>
+        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors duration-300 transform hover:scale-110" aria-label="Follow us on Twitter"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.31c9.14 0 14.13-7.55 14.13-14.13 0-.21 0-.42-.01-.63A10.15 10.15 0 0023 3.73a9.7 9.7 0 01-2.8.76 4.9 4.9 0 002.16-2.73 9.77 9.77 0 01-3.1 1.18 4.88 4.88 0 00-8.32 4.46A13.88 13.88 0 013.25 4.7 4.88 4.88 0 004.8 11.23a4.87 4.87 0 01-2.2-.6v.06a4.88 4.88 0 003.9 4.79 4.92 4.92 0 01-2.2-.08 4.88 4.88 0 004.55 3.39 9.78 9.78 0 01-6.04 2.08c-.39 0-.77-.02-1.15-.07a13.87 13.87 0 007.5 2.2c9.02 0 13.96-7.46 13.96-13.96 0-.21 0-.43-.01-.64a10 10 0 002.46-2.55z" /></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <button onclick="topFunction()" id="scrollToTop" title="Go to top">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Initialize AOS (Animate On Scroll)
+    AOS.init({
+      duration: 1000,     // animation duration
+      once: true,         // whether animation should happen only once - default
+      mirror: false,      // whether elements should animate out while scrolling past them
+      disable: 'mobile'   // Disable AOS on mobile for performance, or use 'phone' | 'tablet' | 'false'
+    });
+
+    // Header Background Change on Scroll
+    const mainHeader = document.getElementById('mainHeader');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) { // Change after scrolling 50px
+        mainHeader.classList.add('scrolled-nav');
+      } else {
+        mainHeader.classList.remove('scrolled-nav');
+      }
+    });
+
+    // Smooth Scroll for internal anchor links (if you implement them)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Scroll to Top Button Logic
+    let mybutton = document.getElementById("scrollToTop");
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) { // Show after 200px scroll
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+
+    // Navbar Active Link Highlighting
+    document.addEventListener('DOMContentLoaded', function() {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const currentPath = window.location.pathname.split('/').pop();
+
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPath || (currentPath === '' && link.getAttribute('href') === 'index.html')) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
